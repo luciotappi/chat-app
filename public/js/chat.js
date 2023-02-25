@@ -19,7 +19,13 @@ messageForm.addEventListener('submit',(e) => {
     
     const message = e.target.elements.message.value
    
-    socket.emit('sendMessage',message)
+    socket.emit('sendMessage',message, (error)=> {
+        if (error) {
+            return console.log(error)
+        }
+
+        console.log('Message delivered')
+    })
 
 })
 
@@ -30,9 +36,6 @@ socket.on('sendMessage',(message) => {
     console.log(message)
 })
 
-socket.on('messageConfirmation',(message) => {
-    console.log(message)
-})
 
 document.querySelector('#send-location').addEventListener('click',(e) =>{
 
@@ -45,6 +48,9 @@ document.querySelector('#send-location').addEventListener('click',(e) =>{
         socket.emit('sendLoation',{
            latitude: position.coords.latitude,
             longitude : position.coords.longitude
+        },() =>{
+          
+            console.log('location shared to the other users')
         })
     })
 
