@@ -28,10 +28,15 @@ io.on('connection',(socket)=> {
     // })
 
     socket.emit('message',message)
-
+    socket.broadcast.emit('message','New user has joined') //sends message to all clients except for sender socket
     socket.on('sendMessage',(message) => {
         socket.emit('messageConfirmation',"Recepcion OK")
         io.emit('sendMessage',message)
+    })
+
+    socket.on('disconnect',() => {
+
+        io.emit('message','A user has left')
     })
 
 })

@@ -23,7 +23,9 @@ messageForm.addEventListener('submit',(e) => {
 
 })
 
-
+socket.on('message',(message) => {
+    console.log(message)
+})
 socket.on('sendMessage',(message) => {
     console.log(message)
 })
